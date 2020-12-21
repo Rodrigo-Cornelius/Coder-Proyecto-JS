@@ -1,4 +1,5 @@
-//Arrays donde voy a guardar las sucursales y los productos.
+/*-------------------ARRAYS-----------------------*/
+//Arrays donde voy a guardar las sucursales, los productos y tipos de productos.
 let sucursales = [{
     id: 0,
     nombrePublico: 'Casa Central',
@@ -7,9 +8,10 @@ let sucursales = [{
     stockProductos: [],
 }];
 let productos = [];
+let tiposDeProducto = [];
 
 
-
+/*-----------------------CONSTRUCTORES-----------------------*/
 //Sucursales - constructores
 let idSucursal = 1;
 class Sucursal {
@@ -41,6 +43,24 @@ class Producto {
     }
 }
 
+//Tipo de producto - contructor
+let idTipoProducto = 1;
+class TipoProducto {
+    constructor(tipo, marca, modelo, precio) {
+        this.id = idTipoProducto;
+        this.tipo = tipo;
+        this.marca = marca;
+        this.modelo = modelo;
+        this.precio = precio;
+        this.sucursalActual = 0;
+
+        idTipoProducto++;
+        tiposDeProducto.push(this);
+    }
+}
+
+/*---------------------------------PRECARGA DE DATOS---------------------------------*/
+
 //Pruebas con sucursales
 function sucursalesPrueba() {
     new Sucursal(`TecnoPato`, `Jose de Martinez 1313`, `Maria Corrales`);
@@ -53,6 +73,15 @@ function sucursalesPrueba() {
     new Sucursal('El Ombú tecnologia', 'Almirante Brown 3310', 'Micaela Estivado');
 }
 sucursalesPrueba();
+
+//Pruebas: Insertando los tipo de prodroducto a usar en pruebas.
+function tipoDeProductosPrueba() {
+    new TipoProducto('televisor', 'LG', 'nueva vista 500', 5000);
+    new TipoProducto('parlante', 'JBL', 'Go 2', 3000);
+    new TipoProducto('televisor', 'LG', 'Vision 1020', 4500);
+    new TipoProducto('auriculares', 'JBL', 'Hi 6', 500);
+}
+tipoDeProductosPrueba();
 
 //Pruebas con productos
 function productosPrueba() {
@@ -117,6 +146,7 @@ function asignacionProductosPrueba() {
 }
 asignacionProductosPrueba();
 
+/*------------------------FUNCIONES PARA LA LOGICA DEL PROYECTO-----------------------*/
 
 //funciones para buscar el objeto por el id tanto para sucursales como para productos en sus respectivos arrays
 function buscarSucursal(idSucursal) {
@@ -182,7 +212,6 @@ listarSucursalesTotalesHTML();
 
 //Desplegar el stock de una sucursal seleccionada
 
-/*primero seleccionar la sucursal y asignar un id(html sucursalSelecList) al id de la sucursal*/
 let sucursalSelecList = document.querySelectorAll('.elementoLista');
 clickElementoSuccLista();
 
@@ -273,7 +302,7 @@ function ArmarproductosDeSucursalPorID(idsucursal) {
         resultado.appendChild(row);
 
     });
-    if(resultado.children[1] == undefined){
+    if (resultado.children[1] == undefined) {
         let sinStock = document.createElement('div');
         sinStock.classList = "my-4 col-sm text-center";
         sinStock.textContent = "La sucursal seleccionada no Posee Stock de Productos"
@@ -287,7 +316,6 @@ function ArmarproductosDeSucursalPorID(idsucursal) {
 let btnAgregarSucursal = document.querySelector('#btnAgregarSuccursal');
 btnAgregarSucursal.addEventListener('click', (e) => {
     e.preventDefault();
-    // inputNombreSuccNew inputPropietarioSuccNew inputDireccionSuccNew
     let nom = document.querySelector('#inputNombreSuccNew');
     let prop = document.querySelector('#inputPropietarioSuccNew');
     let dir = document.querySelector('#inputDireccionSuccNew');
@@ -295,4 +323,16 @@ btnAgregarSucursal.addEventListener('click', (e) => {
     listarSucursalesTotalesHTML();
     sucursalSelecList = document.querySelectorAll('.elementoLista');
     clickElementoSuccLista();
+})
+
+//Crear un nuevo tipo de Producto
+let btnCrearNuevoProducto = document.querySelector("#btnProdNew");
+btnCrearNuevoProducto.addEventListener('click', (e) =>{
+    e.preventDefault();
+    // inputTipoProdNew inputPrecioProdNew inputMarcaProdNew inputModeloProdNew
+    let tipo = document.querySelector('#inputTipoProdNew').value;
+    let precio = Number(document.querySelector('#inputPrecioProdNew').value);
+    let marca = document.querySelector('#inputMarcaProdNew').value;
+    let modelo = document.querySelector('#inputModeloProdNew').value;
+    new TipoProducto(tipo, marca, modelo, precio);
 })
