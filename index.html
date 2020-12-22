@@ -20,6 +20,47 @@
     </div>
 
     <div class="text-center mt-4 mb-3">
+        <h2>Agregar Stock de un Producto</h2>
+    </div>
+
+    <div class="container">
+        <form class="row g-3">
+
+            <div class="col-md-6">
+                <label for="slectTipoStockProd" class="form-label">Tipo de Producto</label>
+                <select class="form-select" id="slectTipoStockProd" aria-label="Default select example">
+                    <option selected>Seleccione Tipo</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="selectMarcaStockProd" class="form-label">Marca</label>
+                <select class="form-select" id="selectMarcaStockProd" aria-label="Default select example">
+                    <option selected>Seleccione Marca</option>
+                </select>
+            </div>
+            <div class="col-md-12">
+                <label for="selectModeloStockProd" class="form-label">Modelo</label>
+                <select class="form-select" id="selectModeloStockProd" multiple aria-label="multiple select example">
+                    <option selected>Seleccione Tipo y Marca</option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <label for="inputCantidadStockProd" class="form-label">Cantidad</label>
+                <input type="text" class="form-control" id="inputCantidadStockProd">
+            </div>
+            <div class="col-md-6">
+                <label for="selectSucursalStockProd" class="form-label">Sucursal</label>
+                <select class="form-select" id="selectSucursalStockProd" aria-label="multiple select example">
+                    
+                </select>
+            </div>
+            <div class="col-12">
+                <button type="submit" id="btnCrearStock" class="btn btn-primary">Crear Stock</button>
+            </div>
+        </form>
+    </div>
+
+    <div class="text-center mt-4 mb-3">
         <h2>Agregar Producto Nuevo</h2>
     </div>
 

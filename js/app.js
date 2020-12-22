@@ -52,7 +52,6 @@ class TipoProducto {
         this.marca = marca;
         this.modelo = modelo;
         this.precio = precio;
-        this.sucursalActual = 0;
 
         idTipoProducto++;
         tiposDeProducto.push(this);
@@ -169,6 +168,17 @@ function buscarProducto(idProducto) {
         }
     }
     return resultado;
+}
+
+//Funcion para buscar un tipo de producto
+function buscarTipoDeProducto(idTipoProducto) {
+    let encontre = false;
+    for (let i = 0; i < tiposDeProducto.length && !encontre; i++) {
+        if (tiposDeProducto[i].id==idTipoProducto) {
+            encontre = true;
+            return tiposDeProducto[i];
+        }        
+    }
 }
 
 //Funcion para agregar un producto existente a una sucursal
@@ -327,12 +337,107 @@ btnAgregarSucursal.addEventListener('click', (e) => {
 
 //Crear un nuevo tipo de Producto
 let btnCrearNuevoProducto = document.querySelector("#btnProdNew");
-btnCrearNuevoProducto.addEventListener('click', (e) =>{
+btnCrearNuevoProducto.addEventListener('click', (e) => {
     e.preventDefault();
-    // inputTipoProdNew inputPrecioProdNew inputMarcaProdNew inputModeloProdNew
     let tipo = document.querySelector('#inputTipoProdNew').value;
     let precio = Number(document.querySelector('#inputPrecioProdNew').value);
     let marca = document.querySelector('#inputMarcaProdNew').value;
     let modelo = document.querySelector('#inputModeloProdNew').value;
     new TipoProducto(tipo, marca, modelo, precio);
 })
+
+//Varias funciones constructoras para agregar Stock de un producto
+function crearSelectTipo() {
+    let selector = document.querySelector("#slectTipoStockProd");
+    let tipos = [];
+    tiposDeProducto.forEach(e => {
+        if (!tipos.includes(e.tipo)) {
+            let option = document.createElement('option');
+            option.setAttribute('value', e.tipo);
+            option.textContent = e.tipo;
+            selector.appendChild(option);
+            tipos.push(e.tipo);
+        }
+    });
+}
+crearSelectTipo();
+
+function crearSelectMarca(tipoProd){
+    let selectorMarca = document.querySelector("#selectMarcaStockProd");
+    let marcas = [];
+    vaciarSelector(selectorMarca, "Seleccione Marca")
+    tiposDeProducto.forEach(e => {
+        if (e.tipo==tipoProd && !marcas.includes(e.marca)) {
+            let option = document.createElement('option');
+            option.setAttribute('value', e.marca);
+            option.textContent = e.marca;
+            selectorMarca.appendChild(option);
+            marcas.push(e.marca);
+        }
+    });
+}
+
+function crearSelectModelo(tipoProd, marcaProd){
+    selectorModelo = document.querySelector("#selectModeloStockProd");
+    selectorModelo.textContent = "";
+    tiposDeProducto.forEach(e => {
+        if (e.tipo == tipoProd && e.marca == marcaProd) {
+            let option = document.createElement('option');
+            option.setAttribute('value', e.id);
+            option.textContent = e.modelo;
+            selectorModelo.appendChild(option);
+        }
+    });
+}
+
+function crearSelectSucursal() {
+    selectorSucursal = document.querySelector("#selectSucursalStockProd");
+    sucursales.forEach(e => {
+        let option = document.createElement('option');
+            option.setAttribute('value', e.id);
+            option.textContent = e.nombrePublico;
+            selectorSucursal.appendChild(option);
+    });
+}
+crearSelectSucursal();
+
+function vaciarSelector(selector, textoSelector){
+    selector.textContent = "";
+    let opcion = document.createElement('option');
+    opcion.setAttribute('selected', 'true');
+    opcion.textContent = textoSelector;
+    selector.appendChild(opcion);
+}
+
+//Funcion para agregar stock a una sucursal
+function agregarNuevoStock(tipoproducto, cantidad, idsucursalDestino) {
+    for (let i = 1; i <= cantidad; i++) {
+        new Producto(tipoproducto.tipo, tipoproducto.marca, tipoproducto.modelo, tipoproducto.precio)
+        agregarProdASucc(productos[productos.length-1].id, idsucursalDestino);
+    }
+}
+
+
+document.querySelector("#selectMarcaStockProd").addEventListener('click', (e) => {
+    crearSelectModelo(document.querySelector("#slectTipoStockProd").value, document.querySelector("#selectMarcaStockProd").value)
+})
+
+document.querySelector("#slectTipoStockProd").addEventListener('click', (e) => {
+    let selecTipo = document.querySelector("#slectTipoStockProd");
+    if (selecTipo.value!="Seleccione Tipo") {
+        
+        crearSelectMarca(selecTipo.value);
+    }else(
+        document.querySelector("#selectMarcaStockProd").value = ""
+    )
+})
+
+document.querySelector("#btnCrearStock").addEventListener('click', (e)=>{
+    e.preventDefault();
+    let idTipoProducto = Number(document.querySelector("#selectModeloStockProd").value);
+    let cantidad = Number(document.querySelector("#inputCantidadStockProd").value);
+    let idSucursal = Number(document.querySelector("#selectSucursalStockProd").value);
+    agregarNuevoStock(buscarTipoDeProducto(idTipoProducto),cantidad, idSucursal);
+
+})
+
