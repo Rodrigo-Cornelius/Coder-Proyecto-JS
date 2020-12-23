@@ -13,7 +13,7 @@ let tiposDeProducto = [];
 
 /*-----------------------CONSTRUCTORES-----------------------*/
 //Sucursales - constructores
-let idSucursal = 1;
+let idSucursal;
 class Sucursal {
     constructor(nombrePublico, direccion, propietario) {
         this.id = idSucursal;
@@ -28,7 +28,7 @@ class Sucursal {
 }
 
 //Productos - constructores
-let idProducto = 1;
+let idProducto;
 class Producto {
     constructor(tipo, marca, modelo, precio) {
         this.id = idProducto;
@@ -44,7 +44,7 @@ class Producto {
 }
 
 //Tipo de producto - contructor
-let idTipoProducto = 1;
+let idTipoProducto;
 class TipoProducto {
     constructor(tipo, marca, modelo, precio) {
         this.id = idTipoProducto;
@@ -71,7 +71,7 @@ function sucursalesPrueba() {
     new Sucursal('Norma Eventos', 'Colón 758', 'Norma Ballestrino');
     new Sucursal('El Ombú tecnologia', 'Almirante Brown 3310', 'Micaela Estivado');
 }
-sucursalesPrueba();
+// sucursalesPrueba();
 
 //Pruebas: Insertando los tipo de prodroducto a usar en pruebas.
 function tipoDeProductosPrueba() {
@@ -80,7 +80,7 @@ function tipoDeProductosPrueba() {
     new TipoProducto('televisor', 'LG', 'Vision 1020', 4500);
     new TipoProducto('auriculares', 'JBL', 'Hi 6', 500);
 }
-tipoDeProductosPrueba();
+// tipoDeProductosPrueba();
 
 //Pruebas con productos
 function productosPrueba() {
@@ -111,7 +111,7 @@ function productosPrueba() {
     new Producto('auriculares', 'JBL', 'Hi 6', 500);
     new Producto('auriculares', 'JBL', 'Hi 6', 500);
 }
-productosPrueba();
+// productosPrueba();
 
 //Asignando Productos a succursales por defecto (para realizar pruebas)
 function asignacionProductosPrueba() {
@@ -143,7 +143,7 @@ function asignacionProductosPrueba() {
     agregarProdASucc(17, 8);
     agregarProdASucc(18, 8);
 }
-asignacionProductosPrueba();
+// asignacionProductosPrueba();
 
 /*------------------------FUNCIONES PARA LA LOGICA DEL PROYECTO-----------------------*/
 
@@ -174,10 +174,10 @@ function buscarProducto(idProducto) {
 function buscarTipoDeProducto(idTipoProducto) {
     let encontre = false;
     for (let i = 0; i < tiposDeProducto.length && !encontre; i++) {
-        if (tiposDeProducto[i].id==idTipoProducto) {
+        if (tiposDeProducto[i].id == idTipoProducto) {
             encontre = true;
             return tiposDeProducto[i];
-        }        
+        }
     }
 }
 
@@ -185,7 +185,8 @@ function buscarTipoDeProducto(idTipoProducto) {
 function agregarProdASucc(idProducto, idSucursal) {
     buscarSucursal(idSucursal)[`stockProductos`].push(buscarProducto(idProducto));
     buscarProducto(idProducto).sucursalActual = idSucursal;
-
+    guardarArrayEnStorage(sucursales, 'sucursales');
+    guardarArrayEnStorage(productos, 'productos');
 }
 
 //Crear en el HTML una lista de todas las sucursales
@@ -218,12 +219,11 @@ function listarSucursalesTotalesHTML() {
 
     });
 }
-listarSucursalesTotalesHTML();
+
 
 //Desplegar el stock de una sucursal seleccionada
 
-let sucursalSelecList = document.querySelectorAll('.elementoLista');
-clickElementoSuccLista();
+let sucursalSelecList;
 
 function clickElementoSuccLista() {
     sucursalSelecList.forEach(e => {
@@ -333,6 +333,8 @@ btnAgregarSucursal.addEventListener('click', (e) => {
     listarSucursalesTotalesHTML();
     sucursalSelecList = document.querySelectorAll('.elementoLista');
     clickElementoSuccLista();
+    // guardarArrayEnStorage(sucursales,'sucursales');
+    localStorage.sucursales = JSON.stringify(sucursales);
 })
 
 //Crear un nuevo tipo de Producto
@@ -344,12 +346,16 @@ btnCrearNuevoProducto.addEventListener('click', (e) => {
     let marca = document.querySelector('#inputMarcaProdNew').value;
     let modelo = document.querySelector('#inputModeloProdNew').value;
     new TipoProducto(tipo, marca, modelo, precio);
+    guardarArrayEnStorage(tiposDeProducto, "tiposDeProducto");
+    crearSelectTipo()
+
 })
 
 //Varias funciones constructoras para agregar Stock de un producto
 function crearSelectTipo() {
     let selector = document.querySelector("#slectTipoStockProd");
     let tipos = [];
+    selector.textContent = "";
     tiposDeProducto.forEach(e => {
         if (!tipos.includes(e.tipo)) {
             let option = document.createElement('option');
@@ -360,14 +366,13 @@ function crearSelectTipo() {
         }
     });
 }
-crearSelectTipo();
 
-function crearSelectMarca(tipoProd){
+function crearSelectMarca(tipoProd) {
     let selectorMarca = document.querySelector("#selectMarcaStockProd");
     let marcas = [];
     vaciarSelector(selectorMarca, "Seleccione Marca")
     tiposDeProducto.forEach(e => {
-        if (e.tipo==tipoProd && !marcas.includes(e.marca)) {
+        if (e.tipo == tipoProd && !marcas.includes(e.marca)) {
             let option = document.createElement('option');
             option.setAttribute('value', e.marca);
             option.textContent = e.marca;
@@ -377,7 +382,7 @@ function crearSelectMarca(tipoProd){
     });
 }
 
-function crearSelectModelo(tipoProd, marcaProd){
+function crearSelectModelo(tipoProd, marcaProd) {
     selectorModelo = document.querySelector("#selectModeloStockProd");
     selectorModelo.textContent = "";
     tiposDeProducto.forEach(e => {
@@ -394,14 +399,13 @@ function crearSelectSucursal() {
     selectorSucursal = document.querySelector("#selectSucursalStockProd");
     sucursales.forEach(e => {
         let option = document.createElement('option');
-            option.setAttribute('value', e.id);
-            option.textContent = e.nombrePublico;
-            selectorSucursal.appendChild(option);
+        option.setAttribute('value', e.id);
+        option.textContent = e.nombrePublico;
+        selectorSucursal.appendChild(option);
     });
 }
-crearSelectSucursal();
 
-function vaciarSelector(selector, textoSelector){
+function vaciarSelector(selector, textoSelector) {
     selector.textContent = "";
     let opcion = document.createElement('option');
     opcion.setAttribute('selected', 'true');
@@ -413,7 +417,7 @@ function vaciarSelector(selector, textoSelector){
 function agregarNuevoStock(tipoproducto, cantidad, idsucursalDestino) {
     for (let i = 1; i <= cantidad; i++) {
         new Producto(tipoproducto.tipo, tipoproducto.marca, tipoproducto.modelo, tipoproducto.precio)
-        agregarProdASucc(productos[productos.length-1].id, idsucursalDestino);
+        agregarProdASucc(productos[productos.length - 1].id, idsucursalDestino);
     }
 }
 
@@ -424,20 +428,54 @@ document.querySelector("#selectMarcaStockProd").addEventListener('click', (e) =>
 
 document.querySelector("#slectTipoStockProd").addEventListener('click', (e) => {
     let selecTipo = document.querySelector("#slectTipoStockProd");
-    if (selecTipo.value!="Seleccione Tipo") {
-        
+    if (selecTipo.value != "Seleccione Tipo") {
+
         crearSelectMarca(selecTipo.value);
-    }else(
+    } else(
         document.querySelector("#selectMarcaStockProd").value = ""
     )
 })
 
-document.querySelector("#btnCrearStock").addEventListener('click', (e)=>{
+document.querySelector("#btnCrearStock").addEventListener('click', (e) => {
     e.preventDefault();
     let idTipoProducto = Number(document.querySelector("#selectModeloStockProd").value);
     let cantidad = Number(document.querySelector("#inputCantidadStockProd").value);
     let idSucursal = Number(document.querySelector("#selectSucursalStockProd").value);
-    agregarNuevoStock(buscarTipoDeProducto(idTipoProducto),cantidad, idSucursal);
+    agregarNuevoStock(buscarTipoDeProducto(idTipoProducto), cantidad, idSucursal);
 
 })
 
+/*============================STORAGE Y ARMADO DEL DOCUMENTO===================*/
+
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (localStorage.getItem('sucursales') == null) {
+        idSucursal = 1;
+        idProducto = 1;
+        idTipoProducto = 1;
+        sucursalesPrueba();
+        productosPrueba();
+        tipoDeProductosPrueba();
+        asignacionProductosPrueba();
+        guardarArrayEnStorage(sucursales, 'sucursales')
+        guardarArrayEnStorage(productos, 'productos')
+        guardarArrayEnStorage(tiposDeProducto, 'tiposDeProducto')
+    } else {
+        sucursales = JSON.parse(localStorage.getItem('sucursales'));
+        productos = JSON.parse(localStorage.getItem('productos'));
+        tiposDeProducto = JSON.parse(localStorage.getItem('tiposDeProducto'));
+    }
+    idSucursal = sucursales[sucursales.length - 1].id + 1;
+    idProducto = productos[productos.length - 1].id + 1;
+    idTipoProducto = tiposDeProducto[tiposDeProducto.length - 1].id + 1;
+    listarSucursalesTotalesHTML();
+    sucursalSelecList = document.querySelectorAll('.elementoLista');
+    clickElementoSuccLista();
+    crearSelectTipo();
+    crearSelectSucursal();
+})
+
+//funcion para guardar un array en el Storage
+function guardarArrayEnStorage(array, clave) {
+    localStorage.setItem(clave, JSON.stringify(array));
+}
