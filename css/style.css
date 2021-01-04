@@ -1,0 +1,15 @@
+#alertBox {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    right: 35%;
+    border: 3px solid #73AD21;
+    background-color: aliceblue;
+    z-index: 2;
+}
+
+.oscurecer{
+    background-color: rgb(134, 134, 134);
+    filter:brightness(0.4); 
+    
+}

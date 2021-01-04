@@ -479,3 +479,15 @@ document.addEventListener('DOMContentLoaded', () => {
 function guardarArrayEnStorage(array, clave) {
     localStorage.setItem(clave, JSON.stringify(array));
 }
+
+// Jquery
+
+$("#btnAgregarSuccursal").click(function(){
+    $("#alertBox").show();
+    $("#contenido").addClass('oscurecer');
+})
+
+$("#aceptarSucursal").click(function () {
+    $("#alertBox").hide();
+    $("#contenido").removeClass()
+});

@@ -11,143 +11,174 @@
 </head>
 
 <body>
-    <div class="container text-center mt-4">
-        <div class="row">
-            <div class="col-sm">
-                <h1>Gestor de Sucursales</h1>
+    <!-- Mensaje -->
+    <div id="alertBox">
+        <h4>Sucursal Agregada</h4>
+        <hr>
+        <p>La sucursal ha sido agregada de manera correcta</p>
+        <button type="button" id="aceptarSucursal" class="btn btn-success">Success</button>
+    </div>
+    
+    <!-- Menu -->
+    <ul class="nav flex-column">
+        <li class="nav-item">
+            <a class="nav-link" href="#">Sucursales</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Agregar Stock</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Mover Stock</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Nuevo Tipo de Producto</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" href="#">Nueva Sucursal</a>
+        </li>
+    </ul>
+
+    <div id="contenido">
+        <div class="container text-center pt-4">
+            <div class="row">
+                <div class="col-sm">
+                    <h1>Gestor de Sucursales</h1>
+                </div>
+            </div>
+        </div>
+
+        <div class="text-center mt-4 mb-3">
+            <h2>Agregar Stock de un Producto</h2>
+        </div>
+
+        <div class="container">
+            <form class="row g-3">
+
+                <div class="col-md-6">
+                    <label for="slectTipoStockProd" class="form-label">Tipo de Producto</label>
+                    <select class="form-select" id="slectTipoStockProd" aria-label="Default select example">
+                        <option selected>Seleccione Tipo</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="selectMarcaStockProd" class="form-label">Marca</label>
+                    <select class="form-select" id="selectMarcaStockProd" aria-label="Default select example">
+                        <option selected>Seleccione Marca</option>
+                    </select>
+                </div>
+                <div class="col-md-12">
+                    <label for="selectModeloStockProd" class="form-label">Modelo</label>
+                    <select class="form-select" id="selectModeloStockProd" multiple
+                        aria-label="multiple select example">
+                        <option selected>Seleccione Tipo y Marca</option>
+                    </select>
+                </div>
+                <div class="col-md-6">
+                    <label for="inputCantidadStockProd" class="form-label">Cantidad</label>
+                    <input type="text" class="form-control" id="inputCantidadStockProd">
+                </div>
+                <div class="col-md-6">
+                    <label for="selectSucursalStockProd" class="form-label">Sucursal</label>
+                    <select class="form-select" id="selectSucursalStockProd" aria-label="multiple select example">
+
+                    </select>
+                </div>
+                <div class="col-12">
+                    <button type="submit" id="btnCrearStock" class="btn btn-primary">Crear Stock</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center mt-4 mb-3">
+            <h2>Agregar Producto Nuevo</h2>
+        </div>
+
+        <div class="container">
+            <form class="row g-3">
+                <div class="col-md-6">
+                    <label for="inputTipoProdNew" class="form-label">Tipo de Producto</label>
+                    <input type="text" class="form-control" id="inputTipoProdNew">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPrecioProdNew" class="form-label">Precio</label>
+                    <input type="text" class="form-control" id="inputPrecioProdNew" placeholder="Solo numeros">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputMarcaProdNew" class="form-label">Marca</label>
+                    <input type="text" class="form-control" id="inputMarcaProdNew">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputModeloProdNew" class="form-label">Modelo</label>
+                    <input type="text" class="form-control" id="inputModeloProdNew">
+                </div>
+                <div class="col-12">
+                    <button type="submit" id="btnProdNew" class="btn btn-primary">Crear</button>
+                </div>
+            </form>
+        </div>
+
+
+        <div class="text-center mt-4">
+            <h2>Agregar Sucursal</h2>
+        </div>
+
+        <div class="container">
+            <form class="row g-3">
+                <div class="col-12">
+                    <label for="inputNombreSuccNew" class="form-label">Nombre Publico</label>
+                    <input type="text" class="form-control" id="inputNombreSuccNew">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputPropietarioSuccNew" class="form-label">Propietario</label>
+                    <input type="text" class="form-control" id="inputPropietarioSuccNew"
+                        placeholder="Ingrese el Nombre">
+                </div>
+                <div class="col-md-6">
+                    <label for="inputDireccionSuccNew" class="form-label">Direccion</label>
+                    <input type="text" class="form-control" id="inputDireccionSuccNew">
+                </div>
+                <div class="col-12">
+                    <button type="submit" id="btnAgregarSuccursal" class="btn btn-primary">Agregar</button>
+                </div>
+            </form>
+        </div>
+
+        <div class="text-center mt-4">
+            <h2>Listado de Sucursales</h2>
+        </div>
+        <div class="container border border-dark">
+            <div class="row text-center border-bottom border-3 bg-primary text-white">
+                <div class="col-sm border-end">
+                    ID
+                </div>
+                <div class="col-sm border-end">
+                    Nombre Publico
+                </div>
+                <div class="col-sm border-end">
+                    Dirección
+                </div>
+                <div class="col-sm">
+                    Propietario
+                </div>
+            </div>
+            <div id="listaSucursales">
+            </div>
+        </div>
+        <div class="container mt-4">
+            <div class="border border-dark">
+                <h3 class="text-center">Stock de la Sucursal</h3>
+            </div>
+            <div id="stockActivo" class="border border-dark">
+                <div class=" text-center my-4">
+                    Seleccione una Sucursal
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="text-center mt-4 mb-3">
-        <h2>Agregar Stock de un Producto</h2>
-    </div>
 
-    <div class="container">
-        <form class="row g-3">
-
-            <div class="col-md-6">
-                <label for="slectTipoStockProd" class="form-label">Tipo de Producto</label>
-                <select class="form-select" id="slectTipoStockProd" aria-label="Default select example">
-                    <option selected>Seleccione Tipo</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="selectMarcaStockProd" class="form-label">Marca</label>
-                <select class="form-select" id="selectMarcaStockProd" aria-label="Default select example">
-                    <option selected>Seleccione Marca</option>
-                </select>
-            </div>
-            <div class="col-md-12">
-                <label for="selectModeloStockProd" class="form-label">Modelo</label>
-                <select class="form-select" id="selectModeloStockProd" multiple aria-label="multiple select example">
-                    <option selected>Seleccione Tipo y Marca</option>
-                </select>
-            </div>
-            <div class="col-md-6">
-                <label for="inputCantidadStockProd" class="form-label">Cantidad</label>
-                <input type="text" class="form-control" id="inputCantidadStockProd">
-            </div>
-            <div class="col-md-6">
-                <label for="selectSucursalStockProd" class="form-label">Sucursal</label>
-                <select class="form-select" id="selectSucursalStockProd" aria-label="multiple select example">
-                    
-                </select>
-            </div>
-            <div class="col-12">
-                <button type="submit" id="btnCrearStock" class="btn btn-primary">Crear Stock</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="text-center mt-4 mb-3">
-        <h2>Agregar Producto Nuevo</h2>
-    </div>
-
-    <div class="container">
-        <form class="row g-3">
-            <div class="col-md-6">
-                <label for="inputTipoProdNew" class="form-label">Tipo de Producto</label>
-                <input type="text" class="form-control" id="inputTipoProdNew">
-            </div>
-            <div class="col-md-6">
-                <label for="inputPrecioProdNew" class="form-label">Precio</label>
-                <input type="text" class="form-control" id="inputPrecioProdNew" placeholder="Solo numeros">
-            </div>
-            <div class="col-md-6">
-                <label for="inputMarcaProdNew" class="form-label">Marca</label>
-                <input type="text" class="form-control" id="inputMarcaProdNew">
-            </div>
-            <div class="col-md-6">
-                <label for="inputModeloProdNew" class="form-label">Modelo</label>
-                <input type="text" class="form-control" id="inputModeloProdNew">
-            </div>
-            <div class="col-12">
-                <button type="submit" id="btnProdNew" class="btn btn-primary">Crear</button>
-            </div>
-        </form>
-    </div>
-
-
-    <div class="text-center mt-4">
-        <h2>Agregar Sucursal</h2>
-    </div>
-
-    <div class="container">
-        <form class="row g-3">
-            <div class="col-12">
-                <label for="inputNombreSuccNew" class="form-label">Nombre Publico</label>
-                <input type="text" class="form-control" id="inputNombreSuccNew">
-            </div>
-            <div class="col-md-6">
-                <label for="inputPropietarioSuccNew" class="form-label">Propietario</label>
-                <input type="text" class="form-control" id="inputPropietarioSuccNew" placeholder="Ingrese el Nombre">
-            </div>
-            <div class="col-md-6">
-                <label for="inputDireccionSuccNew" class="form-label">Direccion</label>
-                <input type="text" class="form-control" id="inputDireccionSuccNew">
-            </div>
-            <div class="col-12">
-                <button type="submit" id="btnAgregarSuccursal" class="btn btn-primary">Agregar</button>
-            </div>
-        </form>
-    </div>
-
-    <div class="text-center mt-4">
-        <h2>Listado de Sucursales</h2>
-    </div>
-    <div class="container border border-dark">
-        <div class="row text-center border-bottom border-3 bg-primary text-white">
-            <div class="col-sm border-end">
-                ID
-            </div>
-            <div class="col-sm border-end">
-                Nombre Publico
-            </div>
-            <div class="col-sm border-end">
-                Dirección
-            </div>
-            <div class="col-sm">
-                Propietario
-            </div>
-        </div>
-        <div id="listaSucursales">
-        </div>
-    </div>
-    <div class="container mt-4">
-        <div class="border border-dark">
-            <h3 class="text-center">Stock de la Sucursal</h3>
-        </div>
-        <div id="stockActivo" class="border border-dark">
-            <div class=" text-center my-4">
-                Seleccione una Sucursal
-            </div>
-        </div>
-    </div>
-
-
-
-
+    <!-- jquery -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
     <!-- Mi archivo JS -->
     <script src="js/app.js"></script>
     <!-- JS de bootstrap -->
