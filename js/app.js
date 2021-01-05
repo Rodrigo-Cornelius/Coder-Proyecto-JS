@@ -60,90 +60,44 @@ class TipoProducto {
 
 /*---------------------------------PRECARGA DE DATOS---------------------------------*/
 
-//Pruebas con sucursales
-function sucursalesPrueba() {
-    new Sucursal(`TecnoPato`, `Jose de Martinez 1313`, `Maria Corrales`);
-    new Sucursal(`La tienda de Jorgito`, `Pablo de Maria 521`, `Alberto Gonzalez Jr.`);
-    new Sucursal('Hogar y algo mas...', '18 de Julio 1532', 'Jesús Suarez');
-    new Sucursal('Audio Pepe', 'Avenida Gral. San Martin 2511', 'Alberto Garcia');
-    new Sucursal('TecnoPato Norte', 'Enrique Segobiano 1313', 'Maria Corrales');
-    new Sucursal('El buen oído', 'Bulevar Artigas 502 bis', 'Julieta Diaz');
-    new Sucursal('Norma Eventos', 'Colón 758', 'Norma Ballestrino');
-    new Sucursal('El Ombú tecnologia', 'Almirante Brown 3310', 'Micaela Estivado');
-}
-// sucursalesPrueba();
+//JSON
 
-//Pruebas: Insertando los tipo de prodroducto a usar en pruebas.
-function tipoDeProductosPrueba() {
-    new TipoProducto('televisor', 'LG', 'nueva vista 500', 5000);
-    new TipoProducto('parlante', 'JBL', 'Go 2', 3000);
-    new TipoProducto('televisor', 'LG', 'Vision 1020', 4500);
-    new TipoProducto('auriculares', 'JBL', 'Hi 6', 500);
-}
-// tipoDeProductosPrueba();
+async function crearPrecarga() {
+     await $.ajax({
+        url: 'json/productos.json',
+        dataType: 'json',
 
-//Pruebas con productos
-function productosPrueba() {
-    new Producto(`televisor`, `LG`, `nueva vista 500`, 5000);
-    new Producto(`televisor`, `LG`, `nueva vista 500`, 5000);
-    new Producto(`televisor`, `LG`, `nueva vista 500`, 5000);
-    new Producto(`televisor`, `LG`, `nueva vista 500`, 5000);
-    new Producto(`televisor`, `LG`, `nueva vista 500`, 5000);
-    new Producto(`parlante`, `JBL`, `Go 2`, 3000);
-    new Producto(`parlante`, `JBL`, `Go 2`, 3000);
-    new Producto(`parlante`, `JBL`, `Go 2`, 3000);
-    new Producto(`parlante`, `JBL`, `Go 2`, 3000);
-    new Producto(`parlante`, `JBL`, `Go 2`, 3000);
-    new Producto('televisor', 'LG', 'Vision 1020', 4500);
-    new Producto('televisor', 'LG', 'Vision 1020', 4500);
-    new Producto('televisor', 'LG', 'Vision 1020', 4500);
-    new Producto('televisor', 'LG', 'Vision 1020', 4500);
-    new Producto('televisor', 'LG', 'Vision 1020', 4500);
-    new Producto('televisor', 'LG', 'Vision 1020', 4500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-    new Producto('auriculares', 'JBL', 'Hi 6', 500);
-}
-// productosPrueba();
+        success: function (data) {
 
-//Asignando Productos a succursales por defecto (para realizar pruebas)
-function asignacionProductosPrueba() {
-    // function agregarProdASucc(idProducto, idSucursal)
-    agregarProdASucc(1, 1);
-    agregarProdASucc(5, 1);
-    agregarProdASucc(10, 1);
-    agregarProdASucc(23, 1);
-    agregarProdASucc(2, 2);
-    agregarProdASucc(8, 2);
-    agregarProdASucc(3, 2);
-    agregarProdASucc(4, 3);
-    agregarProdASucc(6, 3);
-    agregarProdASucc(9, 3);
-    agregarProdASucc(7, 4);
-    agregarProdASucc(20, 4);
-    agregarProdASucc(13, 4);
-    agregarProdASucc(11, 5);
-    agregarProdASucc(22, 5);
-    agregarProdASucc(26, 5);
-    agregarProdASucc(12, 6);
-    agregarProdASucc(19, 6);
-    agregarProdASucc(25, 6);
-    agregarProdASucc(14, 7);
-    agregarProdASucc(21, 7);
-    agregarProdASucc(24, 7);
-    agregarProdASucc(15, 8);
-    agregarProdASucc(16, 8);
-    agregarProdASucc(17, 8);
-    agregarProdASucc(18, 8);
+            productos = data;
+        }
+    });
+    await $.ajax({
+        url: 'json/sucursales.json',
+        dataType: 'json',
+        success: function (data) {
+
+            sucursales = data;
+        }
+    });
+    await $.ajax({
+        url: 'json/tiposDeProducto.json',
+        dataType: 'json',
+        success: function (data) {
+
+            tiposDeProducto = data;
+        }
+    });
+    guardarArrayEnStorage(sucursales, 'sucursales');
+    guardarArrayEnStorage(productos, 'productos');
+    guardarArrayEnStorage(tiposDeProducto, 'tiposDeProducto');
+
+    idSucursal = sucursales[sucursales.length - 1].id + 1;
+    idProducto = productos[productos.length - 1].id + 1;
+    idTipoProducto = tiposDeProducto[tiposDeProducto.length - 1].id + 1;
+
+    router();
 }
-// asignacionProductosPrueba();
 
 /*------------------------FUNCIONES PARA LA LOGICA DEL PROYECTO-----------------------*/
 
@@ -192,7 +146,6 @@ function agregarProdASucc(idProducto, idSucursal) {
 //Crear en el HTML una lista de todas las sucursales
 function listarSucursalesTotalesHTML() {
     let lista = document.querySelector('#listaSucursales');
-    lista.textContent = ""
     sucursales.forEach(e => {
         let row = document.createElement('div');
         row.classList = "row border-bottom elementoLista"
@@ -323,39 +276,40 @@ function ArmarproductosDeSucursalPorID(idsucursal) {
 
 
 //Creando una nueva sucursal
-let btnAgregarSucursal = document.querySelector('#btnAgregarSuccursal');
-btnAgregarSucursal.addEventListener('click', (e) => {
-    e.preventDefault();
-    let nom = document.querySelector('#inputNombreSuccNew');
-    let prop = document.querySelector('#inputPropietarioSuccNew');
-    let dir = document.querySelector('#inputDireccionSuccNew');
-    new Sucursal(nom.value, dir.value, prop.value);
-    listarSucursalesTotalesHTML();
-    sucursalSelecList = document.querySelectorAll('.elementoLista');
-    clickElementoSuccLista();
-    // guardarArrayEnStorage(sucursales,'sucursales');
-    localStorage.sucursales = JSON.stringify(sucursales);
-})
+let btnAgregarSucursal;
+
+function eventosCrearSucursal() {
+    btnAgregarSucursal.addEventListener('click', (e) => {
+        e.preventDefault();
+        let nom = document.querySelector('#inputNombreSuccNew');
+        let prop = document.querySelector('#inputPropietarioSuccNew');
+        let dir = document.querySelector('#inputDireccionSuccNew');
+        new Sucursal(nom.value, dir.value, prop.value);
+        // guardarArrayEnStorage(sucursales,'sucursales');
+        localStorage.sucursales = JSON.stringify(sucursales);
+    })
+}
 
 //Crear un nuevo tipo de Producto
-let btnCrearNuevoProducto = document.querySelector("#btnProdNew");
-btnCrearNuevoProducto.addEventListener('click', (e) => {
-    e.preventDefault();
-    let tipo = document.querySelector('#inputTipoProdNew').value;
-    let precio = Number(document.querySelector('#inputPrecioProdNew').value);
-    let marca = document.querySelector('#inputMarcaProdNew').value;
-    let modelo = document.querySelector('#inputModeloProdNew').value;
-    new TipoProducto(tipo, marca, modelo, precio);
-    guardarArrayEnStorage(tiposDeProducto, "tiposDeProducto");
-    crearSelectTipo()
+let btnCrearNuevoProducto;
 
-})
+function eventosCrearNuevoProducto() {
+    btnCrearNuevoProducto.addEventListener('click', (e) => {
+        e.preventDefault();
+        let tipo = document.querySelector('#inputTipoProdNew').value;
+        let precio = Number(document.querySelector('#inputPrecioProdNew').value);
+        let marca = document.querySelector('#inputMarcaProdNew').value;
+        let modelo = document.querySelector('#inputModeloProdNew').value;
+        new TipoProducto(tipo, marca, modelo, precio);
+        guardarArrayEnStorage(tiposDeProducto, "tiposDeProducto");
+    })
+
+}
 
 //Varias funciones constructoras para agregar Stock de un producto
 function crearSelectTipo() {
     let selector = document.querySelector("#slectTipoStockProd");
     let tipos = [];
-    selector.textContent = "";
     tiposDeProducto.forEach(e => {
         if (!tipos.includes(e.tipo)) {
             let option = document.createElement('option');
@@ -421,29 +375,32 @@ function agregarNuevoStock(tipoproducto, cantidad, idsucursalDestino) {
     }
 }
 
+function eventosAgregarStock() {
 
-document.querySelector("#selectMarcaStockProd").addEventListener('click', (e) => {
-    crearSelectModelo(document.querySelector("#slectTipoStockProd").value, document.querySelector("#selectMarcaStockProd").value)
-})
+    document.querySelector("#selectMarcaStockProd").addEventListener('click', (e) => {
+        crearSelectModelo(document.querySelector("#slectTipoStockProd").value, document.querySelector("#selectMarcaStockProd").value)
+    })
 
-document.querySelector("#slectTipoStockProd").addEventListener('click', (e) => {
-    let selecTipo = document.querySelector("#slectTipoStockProd");
-    if (selecTipo.value != "Seleccione Tipo") {
+    document.querySelector("#slectTipoStockProd").addEventListener('click', (e) => {
+        let selecTipo = document.querySelector("#slectTipoStockProd");
+        if (selecTipo.value != "Seleccione Tipo") {
 
-        crearSelectMarca(selecTipo.value);
-    } else(
-        document.querySelector("#selectMarcaStockProd").value = ""
-    )
-})
+            crearSelectMarca(selecTipo.value);
+        } else(
+            document.querySelector("#selectMarcaStockProd").value = ""
+        )
+    })
 
-document.querySelector("#btnCrearStock").addEventListener('click', (e) => {
-    e.preventDefault();
-    let idTipoProducto = Number(document.querySelector("#selectModeloStockProd").value);
-    let cantidad = Number(document.querySelector("#inputCantidadStockProd").value);
-    let idSucursal = Number(document.querySelector("#selectSucursalStockProd").value);
-    agregarNuevoStock(buscarTipoDeProducto(idTipoProducto), cantidad, idSucursal);
+    document.querySelector("#btnCrearStock").addEventListener('click', (e) => {
+        e.preventDefault();
+        let idTipoProducto = Number(document.querySelector("#selectModeloStockProd").value);
+        let cantidad = Number(document.querySelector("#inputCantidadStockProd").value);
+        let idSucursal = Number(document.querySelector("#selectSucursalStockProd").value);
+        agregarNuevoStock(buscarTipoDeProducto(idTipoProducto), cantidad, idSucursal);
 
-})
+    })
+}
+
 
 /*============================STORAGE Y ARMADO DEL DOCUMENTO===================*/
 
@@ -453,27 +410,238 @@ document.addEventListener('DOMContentLoaded', () => {
         idSucursal = 1;
         idProducto = 1;
         idTipoProducto = 1;
-        sucursalesPrueba();
-        productosPrueba();
-        tipoDeProductosPrueba();
-        asignacionProductosPrueba();
-        guardarArrayEnStorage(sucursales, 'sucursales')
-        guardarArrayEnStorage(productos, 'productos')
-        guardarArrayEnStorage(tiposDeProducto, 'tiposDeProducto')
+        crearPrecarga();
     } else {
         sucursales = JSON.parse(localStorage.getItem('sucursales'));
         productos = JSON.parse(localStorage.getItem('productos'));
         tiposDeProducto = JSON.parse(localStorage.getItem('tiposDeProducto'));
+        idSucursal = sucursales[sucursales.length - 1].id + 1;
+        idProducto = productos[productos.length - 1].id + 1;
+        idTipoProducto = tiposDeProducto[tiposDeProducto.length - 1].id + 1;
+
+        router();
     }
-    idSucursal = sucursales[sucursales.length - 1].id + 1;
-    idProducto = productos[productos.length - 1].id + 1;
-    idTipoProducto = tiposDeProducto[tiposDeProducto.length - 1].id + 1;
-    listarSucursalesTotalesHTML();
-    sucursalSelecList = document.querySelectorAll('.elementoLista');
-    clickElementoSuccLista();
-    crearSelectTipo();
-    crearSelectSucursal();
 })
+
+
+// document.addEventListener('DOMContentLoaded', router);
+window.addEventListener('hashchange', router);
+
+
+const ListarSucursales = {
+    render: () => {
+        return `
+        <div class="text-center mt-4">
+                    <h2>Listado de Sucursales</h2>
+                </div>
+                <div class="container border border-dark">
+                    <div class="row text-center border-bottom border-3 bg-primary text-white">
+                        <div class="col-sm border-end">
+                            ID
+                        </div>
+                        <div class="col-sm border-end">
+                            Nombre Publico
+                        </div>
+                        <div class="col-sm border-end">
+                            Dirección
+                        </div>
+                        <div class="col-sm">
+                            Propietario
+                        </div>
+                    </div>
+                    <div id="listaSucursales">
+                    </div>
+                </div>
+                <div class="container mt-4">
+                    <div class="border border-dark">
+                        <h3 class="text-center">Stock de la Sucursal</h3>
+                    </div>
+                    <div id="stockActivo" class="border border-dark">
+                        <div class=" text-center my-4">
+                            Seleccione una Sucursal
+                        </div>
+                    </div>
+                </div>
+        `
+    }
+}
+const AgregarStock = {
+    render: () => {
+        return `
+        <div class="text-center mt-4 mb-3">
+            <h2>Agregar Stock de un Producto</h2>
+        </div>
+                
+                <div class="container">
+                    <form class="row g-3">
+                
+                        <div class="col-md-6">
+                            <label for="slectTipoStockProd" class="form-label">Tipo de Producto</label>
+                            <select class="form-select" id="slectTipoStockProd" aria-label="Default select example">
+                                <option selected>Seleccione Tipo</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="selectMarcaStockProd" class="form-label">Marca</label>
+                            <select class="form-select" id="selectMarcaStockProd" aria-label="Default select example">
+                                <option selected>Seleccione Marca</option>
+                            </select>
+                        </div>
+                        <div class="col-md-12">
+                            <label for="selectModeloStockProd" class="form-label">Modelo</label>
+                            <select class="form-select" id="selectModeloStockProd" multiple
+                                aria-label="multiple select example">
+                                <option selected>Seleccione Tipo y Marca</option>
+                            </select>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputCantidadStockProd" class="form-label">Cantidad</label>
+                            <input type="text" class="form-control" id="inputCantidadStockProd">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="selectSucursalStockProd" class="form-label">Sucursal</label>
+                            <select class="form-select" id="selectSucursalStockProd" aria-label="multiple select example">
+                
+                            </select>
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" id="btnCrearStock" class="btn btn-primary">Crear Stock</button>
+                        </div>
+                    </form>
+                </div>
+        `
+    }
+}
+const CrearProducto = {
+    render: () => {
+        return `
+        <div class="text-center mt-4 mb-3">
+        <h2>Agregar Producto Nuevo</h2>
+    </div>
+    
+    <div class="container">
+        <form class="row g-3">
+            <div class="col-md-6">
+                <label for="inputTipoProdNew" class="form-label">Tipo de Producto</label>
+                <input type="text" class="form-control" id="inputTipoProdNew">
+            </div>
+            <div class="col-md-6">
+                <label for="inputPrecioProdNew" class="form-label">Precio</label>
+                <input type="text" class="form-control" id="inputPrecioProdNew" placeholder="Solo numeros">
+            </div>
+            <div class="col-md-6">
+                <label for="inputMarcaProdNew" class="form-label">Marca</label>
+                <input type="text" class="form-control" id="inputMarcaProdNew">
+            </div>
+            <div class="col-md-6">
+                <label for="inputModeloProdNew" class="form-label">Modelo</label>
+                <input type="text" class="form-control" id="inputModeloProdNew">
+            </div>
+            <div class="col-12">
+                <button type="submit" id="btnProdNew" class="btn btn-primary">Crear</button>
+            </div>
+        </form>
+    </div>
+        `
+    }
+}
+const CrearSucursal = {
+    render: () => {
+        return `
+        <div class="text-center mt-4">
+                    <h2>Agregar Sucursal</h2>
+                </div>
+                
+                <div class="container">
+                    <form class="row g-3">
+                        <div class="col-12">
+                            <label for="inputNombreSuccNew" class="form-label">Nombre Publico</label>
+                            <input type="text" class="form-control" id="inputNombreSuccNew">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputPropietarioSuccNew" class="form-label">Propietario</label>
+                            <input type="text" class="form-control" id="inputPropietarioSuccNew"
+                                placeholder="Ingrese el Nombre">
+                        </div>
+                        <div class="col-md-6">
+                            <label for="inputDireccionSuccNew" class="form-label">Direccion</label>
+                            <input type="text" class="form-control" id="inputDireccionSuccNew">
+                        </div>
+                        <div class="col-12">
+                            <button type="submit" id="btnAgregarSuccursal" class="btn btn-primary">Agregar</button>
+                        </div>
+                    </form>
+                </div>
+        `
+    }
+}
+const ErrorComponent = {
+    render: () => {
+        return `
+            <h1>Pagina no encontrada</h1>
+        `
+    }
+}
+
+
+const routes = [{
+        path: '/',
+        component: ListarSucursales
+    },
+    {
+        path: '/agregarStock',
+        component: AgregarStock
+    },
+    {
+        path: '/nuevoProducto',
+        component: CrearProducto
+    },
+    {
+        path: '/nuevaSucursal',
+        component: CrearSucursal
+    },
+]
+
+function parseLocation() {
+    return location.hash.slice(1) || '/'
+}
+
+function OptenerComponente(path, routes) {
+    return routes.find(route => route.path.match(new RegExp(`^\\${path}$`, `gm`))) //Expresiones regulares
+}
+
+function router() {
+    // Identificando la ruta elegida por el usuario
+    const path = parseLocation();
+
+    // Vamos a buscar el componente correspondiente al path
+    const {
+        component = ErrorComponent
+    } = OptenerComponente(path, routes) || {};
+
+    $('#carga').html(component.render());
+    switch (path) {
+        case '/':
+            listarSucursalesTotalesHTML();
+            sucursalSelecList = document.querySelectorAll('.elementoLista');
+            clickElementoSuccLista();
+            break;
+        case '/agregarStock':
+            crearSelectTipo();
+            crearSelectSucursal();
+            eventosAgregarStock()
+            break;
+        case '/nuevoProducto':
+            btnCrearNuevoProducto = document.querySelector("#btnProdNew");
+            eventosCrearNuevoProducto();
+            break;
+        case '/nuevaSucursal':
+            btnAgregarSucursal = document.querySelector('#btnAgregarSuccursal');
+            eventosCrearSucursal();
+            break;
+    }
+
+}
 
 //funcion para guardar un array en el Storage
 function guardarArrayEnStorage(array, clave) {
@@ -482,7 +650,7 @@ function guardarArrayEnStorage(array, clave) {
 
 // Jquery
 
-$("#btnAgregarSuccursal").click(function(){
+$("#btnAgregarSuccursal").click(function () {
     $("#alertBox").show();
     $("#contenido").addClass('oscurecer');
 })

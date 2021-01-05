@@ -1,0 +1,237 @@
+[{
+    "id": 0,
+    "nombrePublico": "Casa Central",
+    "direccion": "Fernandez Crespo 2102",
+    "propietario": "Micaela Demello",
+    "stockProductos": []
+}, {
+    "id": 1,
+    "nombrePublico": "TecnoPato",
+    "direccion": "Jose de Martinez 1313",
+    "propietario": "Maria Corrales",
+    "stockProductos": [{
+        "id": 1,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "nueva vista 500",
+        "precio": 5000,
+        "sucursalActual": 1
+    }, {
+        "id": 5,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "nueva vista 500",
+        "precio": 5000,
+        "sucursalActual": 1
+    }, {
+        "id": 10,
+        "tipo": "parlante",
+        "marca": "JBL",
+        "modelo": "Go 2",
+        "precio": 3000,
+        "sucursalActual": 1
+    }, {
+        "id": 23,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 1
+    }]
+}, {
+    "id": 2,
+    "nombrePublico": "La tienda de Jorgito",
+    "direccion": "Pablo de Maria 521",
+    "propietario": "Alberto Gonzalez Jr.",
+    "stockProductos": [{
+        "id": 2,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "nueva vista 500",
+        "precio": 5000,
+        "sucursalActual": 2
+    }, {
+        "id": 8,
+        "tipo": "parlante",
+        "marca": "JBL",
+        "modelo": "Go 2",
+        "precio": 3000,
+        "sucursalActual": 2
+    }, {
+        "id": 3,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "nueva vista 500",
+        "precio": 5000,
+        "sucursalActual": 2
+    }]
+}, {
+    "id": 3,
+    "nombrePublico": "Hogar y algo mas...",
+    "direccion": "18 de Julio 1532",
+    "propietario": "Jesús Suarez",
+    "stockProductos": [{
+        "id": 4,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "nueva vista 500",
+        "precio": 5000,
+        "sucursalActual": 3
+    }, {
+        "id": 6,
+        "tipo": "parlante",
+        "marca": "JBL",
+        "modelo": "Go 2",
+        "precio": 3000,
+        "sucursalActual": 3
+    }, {
+        "id": 9,
+        "tipo": "parlante",
+        "marca": "JBL",
+        "modelo": "Go 2",
+        "precio": 3000,
+        "sucursalActual": 3
+    }]
+}, {
+    "id": 4,
+    "nombrePublico": "Audio Pepe",
+    "direccion": "Avenida Gral. San Martin 2511",
+    "propietario": "Alberto Garcia",
+    "stockProductos": [{
+        "id": 7,
+        "tipo": "parlante",
+        "marca": "JBL",
+        "modelo": "Go 2",
+        "precio": 3000,
+        "sucursalActual": 4
+    }, {
+        "id": 20,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 4
+    }, {
+        "id": 13,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "Vision 1020",
+        "precio": 4500,
+        "sucursalActual": 4
+    }]
+}, {
+    "id": 5,
+    "nombrePublico": "TecnoPato Norte",
+    "direccion": "Enrique Segobiano 1313",
+    "propietario": "Maria Corrales",
+    "stockProductos": [{
+        "id": 11,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "Vision 1020",
+        "precio": 4500,
+        "sucursalActual": 5
+    }, {
+        "id": 22,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 5
+    }, {
+        "id": 26,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 5
+    }]
+}, {
+    "id": 6,
+    "nombrePublico": "El buen oído",
+    "direccion": "Bulevar Artigas 502 bis",
+    "propietario": "Julieta Diaz",
+    "stockProductos": [{
+        "id": 12,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "Vision 1020",
+        "precio": 4500,
+        "sucursalActual": 6
+    }, {
+        "id": 19,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 6
+    }, {
+        "id": 25,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 6
+    }]
+}, {
+    "id": 7,
+    "nombrePublico": "Norma Eventos",
+    "direccion": "Colón 758",
+    "propietario": "Norma Ballestrino",
+    "stockProductos": [{
+        "id": 14,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "Vision 1020",
+        "precio": 4500,
+        "sucursalActual": 7
+    }, {
+        "id": 21,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 7
+    }, {
+        "id": 24,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 7
+    }]
+}, {
+    "id": 8,
+    "nombrePublico": "El Ombú tecnologia",
+    "direccion": "Almirante Brown 3310",
+    "propietario": "Micaela Estivado",
+    "stockProductos": [{
+        "id": 15,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "Vision 1020",
+        "precio": 4500,
+        "sucursalActual": 8
+    }, {
+        "id": 16,
+        "tipo": "televisor",
+        "marca": "LG",
+        "modelo": "Vision 1020",
+        "precio": 4500,
+        "sucursalActual": 8
+    }, {
+        "id": 17,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 8
+    }, {
+        "id": 18,
+        "tipo": "auriculares",
+        "marca": "JBL",
+        "modelo": "Hi 6",
+        "precio": 500,
+        "sucursalActual": 8
+    }]
+}]

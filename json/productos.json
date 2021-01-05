@@ -1,0 +1,183 @@
+[{
+    "id": 1,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "nueva vista 500",
+    "precio": 5000,
+    "sucursalActual": 1
+}, {
+    "id": 2,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "nueva vista 500",
+    "precio": 5000,
+    "sucursalActual": 2
+}, {
+    "id": 3,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "nueva vista 500",
+    "precio": 5000,
+    "sucursalActual": 2
+}, {
+    "id": 4,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "nueva vista 500",
+    "precio": 5000,
+    "sucursalActual": 3
+}, {
+    "id": 5,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "nueva vista 500",
+    "precio": 5000,
+    "sucursalActual": 1
+}, {
+    "id": 6,
+    "tipo": "parlante",
+    "marca": "JBL",
+    "modelo": "Go 2",
+    "precio": 3000,
+    "sucursalActual": 3
+}, {
+    "id": 7,
+    "tipo": "parlante",
+    "marca": "JBL",
+    "modelo": "Go 2",
+    "precio": 3000,
+    "sucursalActual": 4
+}, {
+    "id": 8,
+    "tipo": "parlante",
+    "marca": "JBL",
+    "modelo": "Go 2",
+    "precio": 3000,
+    "sucursalActual": 2
+}, {
+    "id": 9,
+    "tipo": "parlante",
+    "marca": "JBL",
+    "modelo": "Go 2",
+    "precio": 3000,
+    "sucursalActual": 3
+}, {
+    "id": 10,
+    "tipo": "parlante",
+    "marca": "JBL",
+    "modelo": "Go 2",
+    "precio": 3000,
+    "sucursalActual": 1
+}, {
+    "id": 11,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500,
+    "sucursalActual": 5
+}, {
+    "id": 12,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500,
+    "sucursalActual": 6
+}, {
+    "id": 13,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500,
+    "sucursalActual": 4
+}, {
+    "id": 14,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500,
+    "sucursalActual": 7
+}, {
+    "id": 15,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500,
+    "sucursalActual": 8
+}, {
+    "id": 16,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500,
+    "sucursalActual": 8
+}, {
+    "id": 17,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 8
+}, {
+    "id": 18,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 8
+}, {
+    "id": 19,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 6
+}, {
+    "id": 20,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 4
+}, {
+    "id": 21,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 7
+}, {
+    "id": 22,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 5
+}, {
+    "id": 23,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 1
+}, {
+    "id": 24,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 7
+}, {
+    "id": 25,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 6
+}, {
+    "id": 26,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500,
+    "sucursalActual": 5
+}]

@@ -1,0 +1,25 @@
+[{
+    "id": 1,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "nueva vista 500",
+    "precio": 5000
+}, {
+    "id": 2,
+    "tipo": "parlante",
+    "marca": "JBL",
+    "modelo": "Go 2",
+    "precio": 3000
+}, {
+    "id": 3,
+    "tipo": "televisor",
+    "marca": "LG",
+    "modelo": "Vision 1020",
+    "precio": 4500
+}, {
+    "id": 4,
+    "tipo": "auriculares",
+    "marca": "JBL",
+    "modelo": "Hi 6",
+    "precio": 500
+}]
