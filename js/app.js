@@ -63,7 +63,7 @@ class TipoProducto {
 //JSON
 
 async function crearPrecarga() {
-     await $.ajax({
+    await $.ajax({
         url: 'json/productos.json',
         dataType: 'json',
 
@@ -359,6 +359,7 @@ function crearSelectSucursal() {
     });
 }
 
+//funcion para vaciar selectores colocandole el texto por defecto
 function vaciarSelector(selector, textoSelector) {
     selector.textContent = "";
     let opcion = document.createElement('option');
@@ -367,7 +368,7 @@ function vaciarSelector(selector, textoSelector) {
     selector.appendChild(opcion);
 }
 
-//Funcion para agregar stock a una sucursal
+//Funcion para agregar nuevo stock a una sucursal
 function agregarNuevoStock(tipoproducto, cantidad, idsucursalDestino) {
     for (let i = 1; i <= cantidad; i++) {
         new Producto(tipoproducto.tipo, tipoproducto.marca, tipoproducto.modelo, tipoproducto.precio)
@@ -401,6 +402,119 @@ function eventosAgregarStock() {
     })
 }
 
+//Varias funciones para mover stock
+
+//funcion para crear un select para la sucursal de origen y destino
+function succursalesEnSelect(elemento, idOrigen = null) {
+    sucursales.forEach(e => {
+        if (e.id != idOrigen) {
+            let option = document.createElement('option');
+            //nombrePublico
+            option.setAttribute('value', e.id);
+            option.textContent = e.nombrePublico;
+            elemento.appendChild(option);
+        }
+    });
+}
+
+//funcion para generar el stock seleccionado del Origen
+function stockOrigen() {
+    let divStock = document.querySelector("#divStockOrigen");
+    divStock.textContent = '';
+    if (document.querySelector("#selectSucOrigen").value != 'Seleccione Sucursal') {
+        let stock = buscarSucursal(document.querySelector("#selectSucOrigen").value).stockProductos;
+        stock.forEach(e => {
+            let btn = document.createElement('button');
+            btn.classList.add("list-group-item");
+            btn.classList.add("list-group-item-action");
+            btn.setAttribute('type', 'button');
+            btn.setAttribute('value', e.id);
+            btn.textContent = `|ID=${e.id}| ${e.tipo} ${e.marca} ${e.modelo}`
+            divStock.appendChild(btn);
+        });
+    }
+    if (divStock.textContent=='') {
+        divStock.innerHTML = `<p class= "p-2 text-center">Sucursal sin Stock</p>`;
+    }
+    if (document.querySelector("#selectSucOrigen").value == "Seleccione Sucursal") {
+        divStock.innerHTML = `<p class= "p-2 text-center">Seleccione Sucursal</p>`;
+    }
+}
+
+//funcion para generar el stock seleccionado del Destino
+function stockDestino() {
+    let divStock = document.querySelector("#divMovSuccDestino");
+    divStock.textContent = '';
+    if (document.querySelector("#selectSucDestino").value != 'Seleccione Sucursal') {
+        let stock = buscarSucursal(document.querySelector("#selectSucDestino").value).stockProductos;
+        let lista = document.createElement('ul');
+        lista.classList.add('list-group');
+        stock.forEach(e => {
+            let liElemento = document.createElement('li');
+            liElemento.classList.add("list-group-item");
+            liElemento.textContent = `|ID=${e.id}| ${e.tipo} ${e.marca} ${e.modelo}`;
+            lista.appendChild(liElemento);
+        });
+        if (lista.textContent != '') {
+            divStock.appendChild(lista);
+        } else {
+            divStock.innerHTML = `<p class= "p-2 text-center">Sucursal sin Stock</p>`;
+        }
+    } else {
+        divStock.innerHTML = `<p class= "p-2 text-center">Seleccione Sucursal</p>`;
+    }
+}
+
+//funcion del evento para colocarles la clase active a los botones en stock
+function eventoActiveEnOrigen() {
+    let elementosStock = document.querySelectorAll('.list-group-item-action');
+    elementosStock.forEach(e => {
+        e.addEventListener('click', () => {
+            e.classList.toggle('active');
+        })
+    });
+}
+
+//eventos para la seccion de Mover Stock
+function eventosMoverStock(){
+    // Armado del selector Sucursal de Origen
+    succursalesEnSelect(document.querySelector('#selectSucOrigen'));
+
+    //evento para generar el select de las sucursales de destino y el stock de la de origen.
+    document.querySelector("#selectSucOrigen").addEventListener('click', () => {
+        vaciarSelector(document.querySelector("#selectSucDestino"), "Seleccione Sucursal");
+        let origen = document.querySelector("#selectSucOrigen");
+        if (origen.value != "Seleccione Sucursal") {
+            succursalesEnSelect(document.querySelector("#selectSucDestino"), origen.value);
+        }
+        document.querySelector('#selectSucDestino').addEventListener('click', stockDestino);
+        stockOrigen();
+        eventoActiveEnOrigen()
+    })
+    
+    // evento del boton para mover stock
+    document.querySelector("#btnMoverStock").addEventListener('click', (e) => {
+        e.preventDefault();
+        let botonesPresionados = document.querySelectorAll('.active');
+        let sucOrigen = buscarSucursal(document.querySelector('#selectSucOrigen').value);
+        let sucDestino = buscarSucursal(document.querySelector('#selectSucDestino').value);
+        let productosAmover = [];
+        botonesPresionados.forEach(e => {
+            let produc = buscarProducto(e.value);
+            produc.sucursalActual = sucDestino.id;
+            productosAmover.push(produc);
+        });
+    
+        productosAmover.forEach(f => {
+            sucOrigen.stockProductos.splice(sucOrigen.stockProductos.indexOf(f),1);
+            sucDestino.stockProductos.push(f);
+        });
+        guardarArrayEnStorage(sucursales, 'sucursales');
+        guardarArrayEnStorage(productos, 'productos');
+    })
+}
+
+
 
 /*============================STORAGE Y ARMADO DEL DOCUMENTO===================*/
 
@@ -421,6 +535,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
         router();
     }
+    //temp
 })
 
 
@@ -575,6 +690,40 @@ const CrearSucursal = {
         `
     }
 }
+const MoverSucursal = {
+    render: () => {
+        return `
+        <h2 class="text-center">
+                    Mover Stock
+                </h2>
+                <div class="row ">
+                    <div class="col-5">
+                        <label for="selectSucOrigen" class="form-label">Sucursal de Origen</label>
+                        <select class="form-select mb-2" id="selectSucOrigen" aria-label="Default select example">
+                            <option selected>Seleccione Sucursal</option>
+                        </select>
+                        <div id="divMovSuccOrigen" class="border rounded p-1">
+                            <div id="divStockOrigen" class="list-group">
+                                <p class="p-2 text-center">Seleccione Sucursal</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-2 d-flex align-items-center justify-content-center">
+                        <button type="submit" id="btnMoverStock" class="btn btn-primary">Mover >>></button>
+                    </div>
+                    <div class="col-5">
+                        <label for="selectSucDestino" class="form-label">Sucursal de Destino</label>
+                        <select class="form-select mb-2" id="selectSucDestino" aria-label="Default select example">
+                            <option selected>Seleccione Sucursal</option>
+                        </select>
+                        <div id="divMovSuccDestino" class="border rounded p-1">
+                            <p class= "p-2 text-center">Seleccione Sucursal</p>
+                        </div>
+                    </div>
+                </div>
+        `
+    }
+}
 const ErrorComponent = {
     render: () => {
         return `
@@ -599,6 +748,10 @@ const routes = [{
     {
         path: '/nuevaSucursal',
         component: CrearSucursal
+    },
+    {
+        path: '/moverStock',
+        component: MoverSucursal
     },
 ]
 
@@ -630,14 +783,20 @@ function router() {
             crearSelectTipo();
             crearSelectSucursal();
             eventosAgregarStock()
+            alertaSuccess("#btnCrearStock")
             break;
         case '/nuevoProducto':
             btnCrearNuevoProducto = document.querySelector("#btnProdNew");
             eventosCrearNuevoProducto();
+            alertaSuccess("#btnProdNew");
             break;
         case '/nuevaSucursal':
             btnAgregarSucursal = document.querySelector('#btnAgregarSuccursal');
             eventosCrearSucursal();
+            alertaSuccess("#btnAgregarSuccursal")
+            break;
+        case '/moverStock':
+            eventosMoverStock();
             break;
     }
 
@@ -650,12 +809,42 @@ function guardarArrayEnStorage(array, clave) {
 
 // Jquery
 
-$("#btnAgregarSuccursal").click(function () {
-    $("#alertBox").show();
-    $("#contenido").addClass('oscurecer');
-})
-
-$("#aceptarSucursal").click(function () {
-    $("#alertBox").hide();
-    $("#contenido").removeClass()
-});
+function alertaSuccess(boton) {
+    let mensaje;
+    switch (boton) {
+        case "#btnCrearStock":
+            mensaje = `
+            <h4>Stock Generado</h4>
+            <hr>
+            <p>Se ha generado el stock para la sucursal de manera correcta</p>
+            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            `
+            break;
+        case "#btnProdNew":
+            mensaje = `
+            <h4>Producto Creado</h4>
+            <hr>
+            <p>Se ha creado el producto de manera correcta</p>
+            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            `
+            break;
+        case "#btnAgregarSuccursal":
+            mensaje = `
+            <h4>Sucursal Agregada</h4>
+            <hr>
+            <p>La sucursal ha sido agregada de manera correcta</p>
+            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            `
+            break;
+    }
+    $('#alertBox').html(mensaje);
+    $(boton).click(function () {
+        $("#alertBox").show();
+        $("#contenido").addClass('oscurecer');
+    })
+    $("#btnAceptar").click(function () {
+        $("#alertBox").hide();
+        $("#contenido").removeClass('oscurecer');
+        router();
+    });
+}
