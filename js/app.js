@@ -279,29 +279,65 @@ function ArmarproductosDeSucursalPorID(idsucursal) {
 let btnAgregarSucursal;
 
 function eventosCrearSucursal() {
+    validarFormularioInput();
+
+    let inputs = document.querySelectorAll('#carga input');
+
     btnAgregarSucursal.addEventListener('click', (e) => {
         e.preventDefault();
-        let nom = document.querySelector('#inputNombreSuccNew');
-        let prop = document.querySelector('#inputPropietarioSuccNew');
-        let dir = document.querySelector('#inputDireccionSuccNew');
-        new Sucursal(nom.value, dir.value, prop.value);
-        // guardarArrayEnStorage(sucursales,'sucursales');
-        localStorage.sucursales = JSON.stringify(sucursales);
+        if (inputsCorrectos(inputs)) {
+
+            if (document.querySelector('.formulario__P-errorEnvio-hide') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+
+            let nom = document.querySelector('#inputNombreSuccNew');
+            let prop = document.querySelector('#inputPropietarioSuccNew');
+            let dir = document.querySelector('#inputDireccionSuccNew');
+            new Sucursal(nom.value, dir.value, prop.value);
+            // guardarArrayEnStorage(sucursales,'sucursales');
+            localStorage.sucursales = JSON.stringify(sucursales);
+            alertaSuccess("#btnAgregarSuccursal");
+        } else {
+            if (document.querySelector('.formulario__P-errorEnvio-show') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+        }
     })
+
 }
 
 //Crear un nuevo tipo de Producto
 let btnCrearNuevoProducto;
 
 function eventosCrearNuevoProducto() {
+    validarFormularioInput();
+
+    let inputs = document.querySelectorAll('#carga input');
+
     btnCrearNuevoProducto.addEventListener('click', (e) => {
         e.preventDefault();
-        let tipo = document.querySelector('#inputTipoProdNew').value;
-        let precio = Number(document.querySelector('#inputPrecioProdNew').value);
-        let marca = document.querySelector('#inputMarcaProdNew').value;
-        let modelo = document.querySelector('#inputModeloProdNew').value;
-        new TipoProducto(tipo, marca, modelo, precio);
-        guardarArrayEnStorage(tiposDeProducto, "tiposDeProducto");
+        if (inputsCorrectos(inputs)) {
+            if (document.querySelector('.formulario__P-errorEnvio-hide') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+            let tipo = document.querySelector('#inputTipoProdNew').value;
+            let precio = Number(document.querySelector('#inputPrecioProdNew').value);
+            let marca = document.querySelector('#inputMarcaProdNew').value;
+            let modelo = document.querySelector('#inputModeloProdNew').value;
+            new TipoProducto(tipo, marca, modelo, precio);
+            guardarArrayEnStorage(tiposDeProducto, "tiposDeProducto");
+            alertaSuccess("#btnProdNew");
+        } else {
+            if (document.querySelector('.formulario__P-errorEnvio-show') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+        }
+
     })
 
 }
@@ -339,6 +375,10 @@ function crearSelectMarca(tipoProd) {
 function crearSelectModelo(tipoProd, marcaProd) {
     selectorModelo = document.querySelector("#selectModeloStockProd");
     selectorModelo.textContent = "";
+    let option0 = document.createElement('option');
+    option0.textContent = 'Seleccione Tipo y Marca';
+    option0.className = 'hide';
+    selectorModelo.appendChild(option0);
     tiposDeProducto.forEach(e => {
         if (e.tipo == tipoProd && e.marca == marcaProd) {
             let option = document.createElement('option');
@@ -351,6 +391,12 @@ function crearSelectModelo(tipoProd, marcaProd) {
 
 function crearSelectSucursal() {
     selectorSucursal = document.querySelector("#selectSucursalStockProd");
+
+    let option0 = document.createElement('option');
+    option0.textContent = 'Seleccione sucursal';
+    option0.className = 'hide';
+    selectorSucursal.appendChild(option0);
+
     sucursales.forEach(e => {
         let option = document.createElement('option');
         option.setAttribute('value', e.id);
@@ -391,13 +437,31 @@ function eventosAgregarStock() {
             document.querySelector("#selectMarcaStockProd").value = ""
         )
     })
+    let inputs = document.querySelectorAll('#carga input');
+    let selectores = document.querySelectorAll('#carga select');
 
+    //para validar selectores selectoresCorrectos()
+    validarFormularioInput();
     document.querySelector("#btnCrearStock").addEventListener('click', (e) => {
         e.preventDefault();
-        let idTipoProducto = Number(document.querySelector("#selectModeloStockProd").value);
-        let cantidad = Number(document.querySelector("#inputCantidadStockProd").value);
-        let idSucursal = Number(document.querySelector("#selectSucursalStockProd").value);
-        agregarNuevoStock(buscarTipoDeProducto(idTipoProducto), cantidad, idSucursal);
+        if (inputsCorrectos(inputs) && selectoresCorrectos(selectores)) {
+            if (document.querySelector('.formulario__P-errorEnvio-hide') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+            let idTipoProducto = Number(document.querySelector("#selectModeloStockProd").value);
+            let cantidad = Number(document.querySelector("#inputCantidadStockProd").value);
+            let idSucursal = Number(document.querySelector("#selectSucursalStockProd").value);
+            agregarNuevoStock(buscarTipoDeProducto(idTipoProducto), cantidad, idSucursal);
+            alertaSuccess("#btnCrearStock");
+        } else {
+            if (document.querySelector('.formulario__P-errorEnvio-show') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+        }
+
+
 
     })
 }
@@ -433,7 +497,7 @@ function stockOrigen() {
             divStock.appendChild(btn);
         });
     }
-    if (divStock.textContent=='') {
+    if (divStock.textContent == '') {
         divStock.innerHTML = `<p class= "p-2 text-center">Sucursal sin Stock</p>`;
     }
     if (document.querySelector("#selectSucOrigen").value == "Seleccione Sucursal") {
@@ -476,13 +540,15 @@ function eventoActiveEnOrigen() {
 }
 
 //eventos para la seccion de Mover Stock
-function eventosMoverStock(){
+function eventosMoverStock() {
     // Armado del selector Sucursal de Origen
     succursalesEnSelect(document.querySelector('#selectSucOrigen'));
 
     //evento para generar el select de las sucursales de destino y el stock de la de origen.
     document.querySelector("#selectSucOrigen").addEventListener('click', () => {
         vaciarSelector(document.querySelector("#selectSucDestino"), "Seleccione Sucursal");
+        // divStock.innerHTML = `<p class= "p-2 text-center">Seleccione Sucursal</p>`;
+        document.querySelector('#divMovSuccDestino').innerHTML = `<p class= "p-2 text-center">Seleccione Sucursal</p>`;
         let origen = document.querySelector("#selectSucOrigen");
         if (origen.value != "Seleccione Sucursal") {
             succursalesEnSelect(document.querySelector("#selectSucDestino"), origen.value);
@@ -491,28 +557,129 @@ function eventosMoverStock(){
         stockOrigen();
         eventoActiveEnOrigen()
     })
-    
+
+
     // evento del boton para mover stock
+    let inputs = document.querySelectorAll('#carga input');
     document.querySelector("#btnMoverStock").addEventListener('click', (e) => {
         e.preventDefault();
-        let botonesPresionados = document.querySelectorAll('.active');
-        let sucOrigen = buscarSucursal(document.querySelector('#selectSucOrigen').value);
-        let sucDestino = buscarSucursal(document.querySelector('#selectSucDestino').value);
-        let productosAmover = [];
-        botonesPresionados.forEach(e => {
-            let produc = buscarProducto(e.value);
-            produc.sucursalActual = sucDestino.id;
-            productosAmover.push(produc);
-        });
-    
-        productosAmover.forEach(f => {
-            sucOrigen.stockProductos.splice(sucOrigen.stockProductos.indexOf(f),1);
-            sucDestino.stockProductos.push(f);
-        });
-        guardarArrayEnStorage(sucursales, 'sucursales');
-        guardarArrayEnStorage(productos, 'productos');
+        if (inputsCorrectos(inputs) && $('#divMovSuccOrigen .active').length != 0) {
+            if (document.querySelector('.formulario__P-errorEnvio-hide') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+            let botonesPresionados = document.querySelectorAll('.active');
+            let sucOrigen = buscarSucursal(document.querySelector('#selectSucOrigen').value);
+            let sucDestino = buscarSucursal(document.querySelector('#selectSucDestino').value);
+            let productosAmover = [];
+            botonesPresionados.forEach(e => {
+                let produc = buscarProducto(e.value);
+                produc.sucursalActual = sucDestino.id;
+                productosAmover.push(produc);
+            });
+
+            productosAmover.forEach(f => {
+                sucOrigen.stockProductos.splice(sucOrigen.stockProductos.indexOf(f), 1);
+                sucDestino.stockProductos.push(f);
+            });
+            guardarArrayEnStorage(sucursales, 'sucursales');
+            guardarArrayEnStorage(productos, 'productos');
+            alertaSuccess("#btnMoverStock");
+        } else {
+            if (document.querySelector('.formulario__P-errorEnvio-show') == null) {
+
+                mostrarOcultarErrorEnvio();
+            }
+        }
+
+
+
     })
 }
+
+
+
+/*==============================VALIDACIONES=====================*/
+
+const expresiones = {
+    nombre_numeros: /^[a-zA-ZÀ-ÿ\s0-9\-]{3,16}$/, // Letras, numeros y guion
+    nombre: /^[a-zA-ZÀ-ÿ\s]{3,40}$/, // Letras y espacios, pueden llevar acentos.
+    numero: /^\d+$/,
+}
+
+function validarFormularioInput() {
+    let inputs = document.querySelectorAll('form input');
+    inputs.forEach((inputs) => {
+        inputs.addEventListener('keyup', validarFormulario);
+        inputs.addEventListener('blur', validarFormulario);
+    })
+
+}
+
+const validarFormulario = (e) => {
+    let esCorrecto = false;
+    switch (e.target.name) {
+        case 'nombrePublico':
+            esCorrecto = expresiones.nombre_numeros.test(e.target.value)
+            break;
+        case 'propietario':
+            esCorrecto = expresiones.nombre.test(e.target.value)
+            break;
+        case 'numero':
+            if (expresiones.numero.test(e.target.value)) {
+                if (Number(e.target.value) > 0) {
+                    esCorrecto = true
+                }
+            }
+            break;
+    }
+
+    if (esCorrecto) {
+        e.target.classList.remove('formulario__input-incorrecto')
+        e.target.parentElement.classList.remove('formulario__grupo-incorrecto');
+        e.target.parentElement.querySelector('p').className = 'formulario__P-error-hide';
+    } else {
+        e.target.classList.add('formulario__input-incorrecto');
+        e.target.parentElement.classList.add('formulario__grupo-incorrecto');
+        e.target.parentElement.querySelector('p').className = 'formulario__P-error-show';
+    }
+
+}
+
+function inputsCorrectos(inputs) {
+    let esCorrecto = true;
+    for (let i = 0; i < inputs.length && esCorrecto; i++) {
+        const e = inputs[i];
+        if (e.value == "" || e.classList.length == 2) {
+            esCorrecto = false;
+        }
+    }
+    return esCorrecto;
+}
+
+function mostrarOcultarErrorEnvio() {
+    // formulario__P-errorEnvio-hide  formulario__P-errorEnvio-show
+    let oculto = document.querySelector('.formulario__P-errorEnvio-hide');
+    let visible = document.querySelector('.formulario__P-errorEnvio-show');
+
+    if (oculto == null) {
+        visible.className = 'formulario__P-errorEnvio-hide';
+    } else {
+        oculto.className = 'formulario__P-errorEnvio-show';
+    }
+}
+
+function selectoresCorrectos(selectores) {
+    let esCorrecto = true;
+    for (let i = 0; i < selectores.length && esCorrecto; i++) {
+        const f = selectores[i];
+        if (f.value == "" || f.value == f[0].value) {
+            esCorrecto = false;
+        }
+    }
+    return esCorrecto;
+}
+
 
 
 
@@ -611,7 +778,8 @@ const AgregarStock = {
                         </div>
                         <div class="col-md-6">
                             <label for="inputCantidadStockProd" class="form-label">Cantidad</label>
-                            <input type="text" class="form-control" id="inputCantidadStockProd">
+                            <input type="text" class="form-control" name="numero" id="inputCantidadStockProd">
+                            <p class="formulario__P-error-hide">Error: La cantidad debe ser en numeros y mayor a 0</p>
                         </div>
                         <div class="col-md-6">
                             <label for="selectSucursalStockProd" class="form-label">Sucursal</label>
@@ -620,6 +788,7 @@ const AgregarStock = {
                             </select>
                         </div>
                         <div class="col-12">
+                        <p class="formulario__P-errorEnvio-hide"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong> Por favor rellena el formulario de manera correcta</p>
                             <button type="submit" id="btnCrearStock" class="btn btn-primary">Crear Stock</button>
                         </div>
                     </form>
@@ -638,21 +807,26 @@ const CrearProducto = {
         <form class="row g-3">
             <div class="col-md-6">
                 <label for="inputTipoProdNew" class="form-label">Tipo de Producto</label>
-                <input type="text" class="form-control" id="inputTipoProdNew">
+                <input type="text" class="form-control" name="nombrePublico" id="inputTipoProdNew">
+                <p class="formulario__P-error-hide">Error: El tipo de producto debe contener al menos 3 caracteres (16 max.) y solo se aceptan numeros y/o letras</p>
             </div>
             <div class="col-md-6">
                 <label for="inputPrecioProdNew" class="form-label">Precio</label>
-                <input type="text" class="form-control" id="inputPrecioProdNew" placeholder="Solo numeros">
+                <input type="text" class="form-control" name="numero" id="inputPrecioProdNew" placeholder="Solo numeros">
+                <p class="formulario__P-error-hide">Error: El precio debe ser en numeros y mayor a 0</p>
             </div>
             <div class="col-md-6">
                 <label for="inputMarcaProdNew" class="form-label">Marca</label>
-                <input type="text" class="form-control" id="inputMarcaProdNew">
+                <input type="text" class="form-control" name="nombrePublico" id="inputMarcaProdNew">
+                <p class="formulario__P-error-hide">Error: La Marca debe contener al menos 3 caracteres (16 max.) y solo se aceptan numeros y/o letras</p>
             </div>
             <div class="col-md-6">
                 <label for="inputModeloProdNew" class="form-label">Modelo</label>
-                <input type="text" class="form-control" id="inputModeloProdNew">
+                <input type="text" class="form-control" name="nombrePublico" id="inputModeloProdNew">
+                <p class="formulario__P-error-hide">Error: El modelo debe contener al menos 3 caracteres (16 max.) y solo se aceptan numeros y/o letras</p>
             </div>
             <div class="col-12">
+            <p class="formulario__P-errorEnvio-hide"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong> Por favor rellena el formulario de manera correcta</p>
                 <button type="submit" id="btnProdNew" class="btn btn-primary">Crear</button>
             </div>
         </form>
@@ -669,20 +843,24 @@ const CrearSucursal = {
                 
                 <div class="container">
                     <form class="row g-3">
-                        <div class="col-12">
+                        <div class="col-12 ">
                             <label for="inputNombreSuccNew" class="form-label">Nombre Publico</label>
-                            <input type="text" class="form-control" id="inputNombreSuccNew">
+                            <input type="text" class="form-control" name="nombrePublico" id="inputNombreSuccNew">
+                            <p class="formulario__P-error-hide">Error: El nombre Publico debe contener al menos 3 caracteres y solo se aceptan numeros y/o letras</p>
+
                         </div>
                         <div class="col-md-6">
                             <label for="inputPropietarioSuccNew" class="form-label">Propietario</label>
-                            <input type="text" class="form-control" id="inputPropietarioSuccNew"
-                                placeholder="Ingrese el Nombre">
+                            <input type="text" class="form-control" name="propietario" id="inputPropietarioSuccNew" placeholder="Ingrese el Nombre">
+                            <p class="formulario__P-error-hide">Error: El nombre del propietario debe contener al menos 3 caracteres y solo letras</p>
                         </div>
                         <div class="col-md-6">
                             <label for="inputDireccionSuccNew" class="form-label">Direccion</label>
-                            <input type="text" class="form-control" id="inputDireccionSuccNew">
+                            <input type="text" class="form-control" name="nombrePublico" id="inputDireccionSuccNew">
+                            <p class="formulario__P-error-hide">Error: La direccion debe contener al menos 3 caracteres y solo se aceptan numeros y/o letras</p>
                         </div>
                         <div class="col-12">
+                            <p class="formulario__P-errorEnvio-hide"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong> Por favor rellena el formulario de manera correcta</p>
                             <button type="submit" id="btnAgregarSuccursal" class="btn btn-primary">Agregar</button>
                         </div>
                     </form>
@@ -693,7 +871,7 @@ const CrearSucursal = {
 const MoverSucursal = {
     render: () => {
         return `
-        <h2 class="text-center">
+        <h2 class="text-center mt-4">
                     Mover Stock
                 </h2>
                 <div class="row ">
@@ -719,6 +897,9 @@ const MoverSucursal = {
                         <div id="divMovSuccDestino" class="border rounded p-1">
                             <p class= "p-2 text-center">Seleccione Sucursal</p>
                         </div>
+                    </div>
+                    <div class="col-12">
+                        <p class="formulario__P-errorEnvio-hide"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong> Por favor rellena el formulario de manera correcta</p>
                     </div>
                 </div>
         `
@@ -782,18 +963,15 @@ function router() {
         case '/agregarStock':
             crearSelectTipo();
             crearSelectSucursal();
-            eventosAgregarStock()
-            alertaSuccess("#btnCrearStock")
+            eventosAgregarStock();
             break;
         case '/nuevoProducto':
             btnCrearNuevoProducto = document.querySelector("#btnProdNew");
             eventosCrearNuevoProducto();
-            alertaSuccess("#btnProdNew");
             break;
         case '/nuevaSucursal':
             btnAgregarSucursal = document.querySelector('#btnAgregarSuccursal');
             eventosCrearSucursal();
-            alertaSuccess("#btnAgregarSuccursal")
             break;
         case '/moverStock':
             eventosMoverStock();
@@ -836,15 +1014,26 @@ function alertaSuccess(boton) {
             <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
             `
             break;
+        case "#btnMoverStock":
+            mensaje = `
+            <h4>Se ha realizado el movimiento</h4>
+            <hr>
+            <p>Se realizado el movimiento de stock de manera correcta</p>
+            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            `
+            break;
     }
     $('#alertBox').html(mensaje);
-    $(boton).click(function () {
-        $("#alertBox").show();
-        $("#contenido").addClass('oscurecer');
-    })
+    $("#alertBox").show();
+    $("#contenido").addClass('oscurecer');
+    $(".nav-link").toggleClass('disabled');
+    $("button").prop("disabled", true);
+    $("#btnAceptar").prop("disabled", false);
+
     $("#btnAceptar").click(function () {
         $("#alertBox").hide();
         $("#contenido").removeClass('oscurecer');
+        $(".nav-link").toggleClass('disabled')
         router();
     });
 }
