@@ -1,11 +1,31 @@
-#alertBox {
-    display: none;
-    position: fixed;
-    bottom: 50%;
-    right: 35%;
-    border: 3px solid #73AD21;
-    background-color: aliceblue;
-    z-index: 2;
+
+body{
+    background: #e5e5e5;
+}
+
+html,
+body,
+#contenido
+{
+    height: 100%;
+}
+
+label {
+    font-weight: 625;
+}
+
+h2 {
+    font-weight: 500;
+}
+
+
+
+.tabla{
+    background: white;
+}
+
+#listaSucursales {
+    cursor: pointer;
 }
 
 .hide{
@@ -21,6 +41,52 @@
 .tituloPagina {
     font-size: 1.5rem;
 }
+
+/* Mensaje de Exito */
+
+#alertBox {
+    display: none;
+    position: fixed;
+    bottom: 50%;
+    right: 35%;
+    background-color: aliceblue;
+    z-index: 2;
+}
+
+#alertBox h4{
+    background: #0d6efd;
+    color: #fff;
+    font-size: 1.3rem;
+}
+
+#alertBox i {
+    color: #07c96e;
+    font-size: 1.6rem;
+  
+}
+
+
+/* Menu */
+
+#menu ul li a{
+    border-bottom: solid 1px #3b424d
+}
+
+#menu ul li a,
+#menu ul
+{
+    background: #414956;
+    color: #f0f0f0;
+    font-size: 0.95rem;
+}
+
+#menu>ul>li.active>a,
+#menu>ul>li:hover>a 
+{
+    color: #fff;
+    background: #3b424d
+}
+
 
 
 /* clases para validacion */

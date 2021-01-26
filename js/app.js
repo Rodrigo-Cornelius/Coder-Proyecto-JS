@@ -560,10 +560,10 @@ function eventosMoverStock() {
 
 
     // evento del boton para mover stock
-    let inputs = document.querySelectorAll('#carga input');
+    let selectores = document.querySelectorAll('#carga select');
     document.querySelector("#btnMoverStock").addEventListener('click', (e) => {
         e.preventDefault();
-        if (inputsCorrectos(inputs) && $('#divMovSuccOrigen .active').length != 0) {
+        if (selectoresCorrectos(selectores) && $('#divMovSuccOrigen .active').length != 0) {
             if (document.querySelector('.formulario__P-errorEnvio-hide') == null) {
 
                 mostrarOcultarErrorEnvio();
@@ -702,7 +702,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
         router();
     }
-    //temp
+    //clientHeight: 356
+    // document.querySelector('body').style.height = `${document.querySelector('html').clientHeight}px`
+
 })
 
 
@@ -713,10 +715,10 @@ window.addEventListener('hashchange', router);
 const ListarSucursales = {
     render: () => {
         return `
-        <div class="text-center mt-4">
+                <div class=" text-center mt-4">
                     <h2>Listado de Sucursales</h2>
                 </div>
-                <div class="container border border-dark">
+                <div class="container border border-dark tabla">
                     <div class="row text-center border-bottom border-3 bg-primary text-white">
                         <div class="col-sm border-end">
                             ID
@@ -734,11 +736,11 @@ const ListarSucursales = {
                     <div id="listaSucursales">
                     </div>
                 </div>
-                <div class="container mt-4">
-                    <div class="border border-dark">
+                <div class="container mt-4 ">
+                    <div class="border border-dark tabla">
                         <h3 class="text-center">Stock de la Sucursal</h3>
                     </div>
-                    <div id="stockActivo" class="border border-dark">
+                    <div id="stockActivo" class="border border-dark tabla">
                         <div class=" text-center my-4">
                             Seleccione una Sucursal
                         </div>
@@ -880,7 +882,7 @@ const MoverSucursal = {
                         <select class="form-select mb-2" id="selectSucOrigen" aria-label="Default select example">
                             <option selected>Seleccione Sucursal</option>
                         </select>
-                        <div id="divMovSuccOrigen" class="border rounded p-1">
+                        <div id="divMovSuccOrigen" class="border rounded p-1 tabla">
                             <div id="divStockOrigen" class="list-group">
                                 <p class="p-2 text-center">Seleccione Sucursal</p>
                             </div>
@@ -894,12 +896,12 @@ const MoverSucursal = {
                         <select class="form-select mb-2" id="selectSucDestino" aria-label="Default select example">
                             <option selected>Seleccione Sucursal</option>
                         </select>
-                        <div id="divMovSuccDestino" class="border rounded p-1">
+                        <div id="divMovSuccDestino" class="border rounded p-1 tabla">
                             <p class= "p-2 text-center">Seleccione Sucursal</p>
                         </div>
                     </div>
-                    <div class="col-12">
-                        <p class="formulario__P-errorEnvio-hide"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong> Por favor rellena el formulario de manera correcta</p>
+                    <div class="col-12 mt-2">
+                        <p class="formulario__P-errorEnvio-hide"><i class="fas fa-exclamation-triangle"></i><strong>Error:</strong> Asegúrese de que ha seleccionado stock a mover y la sucursal de destino</p>
                     </div>
                 </div>
         `
@@ -992,46 +994,57 @@ function alertaSuccess(boton) {
     switch (boton) {
         case "#btnCrearStock":
             mensaje = `
-            <h4>Stock Generado</h4>
+            <h4 class=" py-3 px-3 rounded-top rounded-3"><i class="fas fa-check-circle me-3"></i>Stock Generado</h4>
+            
+            <p class="px-3 pt-2">Se ha generado el stock para la sucursal de manera correcta</p>
             <hr>
-            <p>Se ha generado el stock para la sucursal de manera correcta</p>
-            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            <div class="text-end rounded-end rounded-3">
+            <button type="button" id="btnAceptar" class="btn btn-success me-2">Aceptar</button>
+            </div>
             `
             break;
         case "#btnProdNew":
             mensaje = `
-            <h4>Producto Creado</h4>
+            <h4 class=" py-3 px-3 rounded-top rounded-3"><i class="fas fa-check-circle me-3"></i>Producto Creado</h4>
+            
+            <p class="px-3 pt-2">Se ha creado el producto de manera correcta</p>
             <hr>
-            <p>Se ha creado el producto de manera correcta</p>
-            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            <div class="text-end rounded-end rounded-3">
+            <button type="button" id="btnAceptar" class="btn btn-success me-2">Aceptar</button>
+            </div>
             `
             break;
         case "#btnAgregarSuccursal":
             mensaje = `
-            <h4>Sucursal Agregada</h4>
+            <h4 class=" py-3 px-3 rounded-top rounded-3"><i class="fas fa-check-circle me-3"></i>Sucursal Agregada</h4>
+            
+            <p class="px-3 pt-2">La sucursal ha sido agregada de manera correcta</p>
             <hr>
-            <p>La sucursal ha sido agregada de manera correcta</p>
-            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            <div class="text-end rounded-end rounded-3">
+            <button type="button" id="btnAceptar" class="btn btn-success me-2">Aceptar</button>
+            </div>
             `
             break;
         case "#btnMoverStock":
             mensaje = `
-            <h4>Se ha realizado el movimiento</h4>
+            <h4 class=" py-3 px-3 rounded-top rounded-3"><i class="fas fa-check-circle me-3"></i>Se ha realizado el movimiento</h4>
+            
+            <p class="px-3 pt-2">Se realizado el movimiento de stock de manera correcta</p>
             <hr>
-            <p>Se realizado el movimiento de stock de manera correcta</p>
-            <button type="button" id="btnAceptar" class="btn btn-success">Aceptar</button>
+            <div class="text-end rounded-end rounded-3">
+            <button type="button" id="btnAceptar" class="btn btn-success me-2">Aceptar</button>
+            </div>
             `
             break;
     }
     $('#alertBox').html(mensaje);
-    $("#alertBox").show();
+    $("#alertBox").fadeIn();
     $("#contenido").addClass('oscurecer');
     $(".nav-link").toggleClass('disabled');
     $("button").prop("disabled", true);
     $("#btnAceptar").prop("disabled", false);
-
     $("#btnAceptar").click(function () {
-        $("#alertBox").hide();
+        $("#alertBox").fadeOut();
         $("#contenido").removeClass('oscurecer');
         $(".nav-link").toggleClass('disabled')
         router();

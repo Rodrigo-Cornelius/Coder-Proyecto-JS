@@ -12,39 +12,44 @@
 
 <body>
     <!-- Mensaje -->
-    <div id="alertBox">
-        <h4>Sucursal Agregada</h4>
+    <div id="alertBox" class=" pb-2 rounded rounded-3 shadow-lg" >
+        <h4 class=" py-3 px-3 rounded-top rounded-3"><i class="fas fa-check-circle me-3"></i>Sucursal Agregada</h4>
+        <p class="px-3 pt-2">La sucursal ha sido agregada de manera correcta</p>
         <hr>
-        <p>La sucursal ha sido agregada de manera correcta</p>
-        <button type="button" id="btnAceptar" class="btn btn-success">Success</button>
+        <div class="text-end rounded-end rounded-3">
+            <button type="button" id="btnAceptar" class="btn btn-success me-2">Success</button>
+        </div>
     </div>
-    
-    <div id="contenido" class="row">
-
-        <!-- Menu -->
-        <section id="menu" class="col-2">
-            <div class="container ">
-                <div class="row">
-                    <div class="col-sm">
-                        <h1 class="tituloPagina">Gestor de Sucursales</h1>
-                    </div>
-                </div>
+    <!-- Titulo de la Pagina -->
+    <div class="text-center text-light bg-dark py-1 shadow-lg">
+        <div class="row">
+            <div class="col-sm">
+                <h1 class="tituloPagina">GESTOR DE SUCURSALES</h1>
             </div>
-            <ul class="nav flex-column">
+        </div>
+    </div>
+
+
+    <div id="contenido" class="row">
+        <!-- Menu -->
+        <section id="menu" class="col-2  ">
+            <ul class="nav flex-column shadow-lg pt-1  rounded-bottom">
                 <li class="nav-item">
-                    <a class="nav-link" href="#/">Sucursales</a>
+                    <a class="nav-link" href="#/"><i class="fas fa-home pe-2"></i>Sucursales</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/agregarStock">Agregar Stock</a>
+                    <a class="nav-link" href="#/agregarStock"><i class="fas fa-cart-plus pe-2"></i>Agregar Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/moverStock">Mover Stock</a>
+                    <a class="nav-link" href="#/moverStock"><i class="fas fa-people-carry pe-2"></i>Mover Stock</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="#/nuevoProducto">Nuevo Tipo de Producto</a>
+                    <a class="nav-link" href="#/nuevoProducto"><i class="fas fa-laptop-medical pe-2"></i>Nuevo
+                        Producto</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#/nuevaSucursal">Nueva Sucursal</a>
+                <li class="nav-item ">
+                    <a class="nav-link rounded-bottom" href="#/nuevaSucursal"><i
+                            class="fas fa-plus-square pe-2"></i>Nueva Sucursal</a>
                 </li>
             </ul>
         </section>
@@ -55,6 +60,7 @@
         </section>
 
     </div>
+
 
     <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.1/jquery.js"></script>
